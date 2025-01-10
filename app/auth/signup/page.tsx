@@ -59,8 +59,12 @@ const Signup = () => {
       await login();
       toast.success("Successfully signed up!");
       router.push("/test_auth");
-    } catch (error) {
-      toast.error("An error occurred during signup");
+    } catch (error: any) {
+      if (error?.message) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
     } finally {
       setIsloading(false);
     }

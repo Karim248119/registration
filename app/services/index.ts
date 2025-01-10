@@ -1,21 +1,20 @@
-"use client";
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
 });
 
 client.interceptors.request.use(
   (config) => {
-    if (typeof window !== "undefined") {
-      const token = window.sessionStorage.getItem("token");
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    return Promise.reject(error);
+  }
 );
 
 export default client;

@@ -25,6 +25,7 @@ export const getUserData = async () => {
     const response = await client.get("/test-auth");
     return response.data;
   } catch (error) {
+    console.error("Failed to fetch user data:", error);
     return null;
   }
 };
